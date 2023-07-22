@@ -1,25 +1,33 @@
-import { Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
+import getLinks from '../api/heroData';
+import LinkCard from '../components/heroCard';
 
 function Home() {
   const { user } = useAuth();
 
+  const [links, setLinks] = useState([]);
+
+  const getAllLinks = () => {
+    getLinks(user.uid).then(setLinks);
+  };
+
+  useEffect(() => {
+    getAllLinks();
+  }, []);
+
   return (
     <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
+      className="text-center d-flex  justify-content-center align-content-center"
       style={{
-        height: '90vh',
         padding: '30px',
-        maxWidth: '400px',
         margin: '0 auto',
       }}
     >
-      <h2>Hello {user.displayName}! </h2>
-      <p>Click the button below to logout!</p>
-      <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-        Sign Out
-      </Button>
+      {links.map((link) => (
+        <LinkCard key={link.firebaseKey} linkObj={link} onUpdate={getAllLinks} />
+      ))}
     </div>
   );
 }
