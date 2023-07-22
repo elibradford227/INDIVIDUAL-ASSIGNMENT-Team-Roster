@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
-import getLinks from '../api/heroData';
+import { getLinks } from '../api/heroData';
 import LinkCard from '../components/heroCard';
 
 function Home() {
