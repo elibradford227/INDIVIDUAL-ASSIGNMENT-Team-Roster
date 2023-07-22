@@ -9,7 +9,7 @@ function LinkCard({ linkObj, onUpdate }) {
   // FOR DELETE, WE NEED TO REMOVE THE BOOK AND HAVE THE VIEW RERENDER,
   // SO WE PASS THE FUNCTION FROM THE PARENT THAT GETS THE BOOKS
   const deleteThisLink = () => {
-    if (window.confirm('Delete Hero?')) {
+    if (window.confirm('Delete This Hero?')) {
       deleteLink(linkObj.firebaseKey).then(() => onUpdate());
     }
   };
