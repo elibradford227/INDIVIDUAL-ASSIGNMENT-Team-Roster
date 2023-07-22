@@ -15,13 +15,10 @@ const initialState = {
 };
 function HeroForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [links, setLinks] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    getLinks(user.uid).then(setLinks);
-
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
 
@@ -36,7 +33,7 @@ function HeroForm({ obj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
-      updateLink(formInput).then(() => router.push(`//${obj.firebaseKey}`));
+      updateLink(formInput).then(() => router.push(`/${obj.firebaseKey}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createLink(payload).then(({ name }) => {
