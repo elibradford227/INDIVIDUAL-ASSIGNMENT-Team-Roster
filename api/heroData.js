@@ -26,6 +26,18 @@ const deleteLink = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getSingleLink = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/links/${firebaseKey}.json`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 const createLink = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/links.json`, {
     method: 'POST',
@@ -57,4 +69,5 @@ export {
   deleteLink,
   createLink,
   updateLink,
+  getSingleLink,
 };
