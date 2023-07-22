@@ -17,17 +17,38 @@ function Home() {
     getAllLinks();
   }, []);
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+    console.warn(searchResults);
+    console.warn(links);
+  };
+
+  useEffect(() => {
+    const results = links.filter((person) => person.name.toLowerCase().includes(searchTerm));
+    setSearchResults(results);
+  }, [searchTerm]);
+
   return (
-    <div
-      className="text-center d-flex  justify-content-center align-content-center"
-      style={{
-        padding: '30px',
-        margin: '0 auto',
-      }}
-    >
-      {links.map((link) => (
-        <LinkCard key={link.firebaseKey} linkObj={link} onUpdate={getAllLinks} />
-      ))}
+    <div>
+      <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleChange}
+      />
+      <div
+        className="text-center d-flex  justify-content-center align-content-center"
+        style={{
+          padding: '30px',
+          margin: '0 auto',
+        }}
+      >
+        {searchResults.map((link) => (
+          <LinkCard key={link.firebaseKey} linkObj={link} onUpdate={getAllLinks} />
+        ))}
+      </div>
     </div>
   );
 }
