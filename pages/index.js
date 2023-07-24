@@ -21,8 +21,6 @@ function Home() {
   const [searchResults, setSearchResults] = useState([]);
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-    console.warn(searchResults);
-    console.warn(links);
   };
 
   useEffect(() => {
