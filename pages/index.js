@@ -8,6 +8,8 @@ function Home() {
   const { user } = useAuth();
 
   const [links, setLinks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   const getAllLinks = () => {
     getLinks(user.uid).then(setLinks);
@@ -17,13 +19,12 @@ function Home() {
     getAllLinks();
   }, []);
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
   useEffect(() => {
+    setSearchResults(links);
     const results = links.filter((person) => person.name.toLowerCase().includes(searchTerm));
     setSearchResults(results);
   }, [searchTerm]);
@@ -43,9 +44,11 @@ function Home() {
           margin: '0 auto',
         }}
       >
-        {searchResults.map((link) => (
+        {searchResults.length === 0 ? links.map((link) => (
           <LinkCard key={link.firebaseKey} linkObj={link} onUpdate={getAllLinks} />
-        ))}
+        )) : searchResults.map((link) => (
+          <LinkCard key={link.firebaseKey} linkObj={link} onUpdate={getAllLinks} />
+        ))};
       </div>
     </div>
   );
