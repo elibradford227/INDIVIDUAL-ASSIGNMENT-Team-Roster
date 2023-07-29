@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getSingleLink } from '../../api/heroData';
-import HeroForm from '../../components/forms/HeroForm';
+import { getSingleTeamObject } from '../../api/teamData';
+import TeamForm from '../../components/forms/TeamForm';
 
-export default function EditAuthor() {
+export default function EditTeam() {
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
   // TODO: grab the firebasekey
@@ -11,9 +11,9 @@ export default function EditAuthor() {
 
   // TODO: make a call to the API to get the book data
   useEffect(() => {
-    getSingleLink(firebaseKey).then(setEditItem);
+    getSingleTeamObject(firebaseKey).then(setEditItem);
   }, [firebaseKey]);
 
   // TODO: pass object to form
-  return (<HeroForm obj={editItem} />);
+  return (<TeamForm obj={editItem} />);
 }

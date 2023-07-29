@@ -20,14 +20,14 @@ export default function TeamCard({ teamObj, onUpdate }) {
         <p>{teamObj.description}</p>
         {/* DYNAMIC LINK TO VIEW THE BOOK DETAILS  */}
         <Link href={`teams/${teamObj.firebaseKey}`} passHref>
-          <Button variant="primary" className="m-2">VIEW</Button>
+          <Button variant="primary" className="m-2">view</Button>
         </Link>
         {/* DYNAMIC LINK TO EDIT THE BOOK DETAILS  */}
-        <Link href={`teams/${teamObj.firebaseKey}`} passHref>
-          <Button variant="info">EDIT</Button>
+        <Link href={`/editTeam/${teamObj.firebaseKey}`} passHref>
+          <Button variant="info">edit</Button>
         </Link>
         <Button variant="danger" className="m-2" onClick={deleteThisTeam}>
-          DELETE
+          delete
         </Button>
       </Card.Body>
     </Card>

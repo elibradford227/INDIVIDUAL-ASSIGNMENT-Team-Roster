@@ -36,7 +36,7 @@ export default function ViewTeam() {
     getAllMembers();
   }, []);
 
-  // console.warn(members);
+  // console.warn(members)
 
   // useEffect(() => {
   //   getAllLinks();
@@ -61,7 +61,7 @@ export default function ViewTeam() {
         onChange={handleChange}
       />
       <div
-        className="text-center d-flex  justify-content-center align-content-center"
+        className="row row-cols-8 row-cols-lg-3 g-2 text-center d-flex  justify-content-center align-content-center"
         style={{
           padding: '30px',
           margin: '0 auto',
