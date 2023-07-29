@@ -6,14 +6,14 @@ import { Button } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useAuth } from '../../utils/context/authContext';
-import { createLink, updateLink, getLinks } from '../../api/heroData';
+import { createTeam, updateTeam, getTeams } from '../../api/teamData';
 
 const initialState = {
+  title: '',
+  description: '',
   name: '',
-  image: '',
-  role: '',
 };
-function HeroForm({ obj }) {
+function TeamForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
@@ -33,12 +33,12 @@ function HeroForm({ obj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
-      updateLink(formInput).then(() => router.push(`/${obj.firebaseKey}`));
+      updateTeam(formInput).then(() => router.push(`/teams/${obj.firebaseKey}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
-      createLink(payload).then(({ name }) => {
+      createTeam(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
-        updateLink(patchPayload).then(() => {
+        updateTeam(patchPayload).then(() => {
           router.push('/');
         });
       });
@@ -47,49 +47,37 @@ function HeroForm({ obj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Link</h2>
+      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Team</h2>
 
-      <FloatingLabel controlId="floatingInput1" label="Link Name" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Team Name" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Link Name"
-          name="name"
-          value={formInput.name}
+          placeholder="Team Name"
+          name="title"
+          value={formInput.title}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
 
-      {/* IMAGE INPUT  */}
-      <FloatingLabel controlId="floatingInput2" label="Link Image" className="mb-3">
-        <Form.Control
-          type="url"
-          placeholder="Enter an image url"
-          name="image"
-          value={formInput.image}
-          onChange={handleChange}
-          required
-        />
-      </FloatingLabel>
-
-      <FloatingLabel controlId="floatingInput3" label="Link Role" className="mb-3">
+      <FloatingLabel controlId="floatingInput2" label="Team Description" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Link Role"
-          name="role"
-          value={formInput.role}
+          placeholder="Team Description"
+          name="description"
+          value={formInput.description}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
 
       {/* SUBMIT BUTTON  */}
-      <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Link</Button>
+      <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Team</Button>
     </Form>
   );
 }
 
-HeroForm.propTypes = {
+TeamForm.propTypes = {
   obj: PropTypes.shape({
     name: PropTypes.string,
     image: PropTypes.string,
@@ -99,8 +87,8 @@ HeroForm.propTypes = {
   }),
 };
 
-HeroForm.defaultProps = {
+TeamForm.defaultProps = {
   obj: initialState,
 };
 
-export default HeroForm;
+export default TeamForm;
